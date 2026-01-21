@@ -37,9 +37,10 @@ A lightweight, browser-based markdown viewer with enhanced diagram navigation ca
 1. **Open the App**
    ```bash
    # Option 1: Open directly in browser
-   open index.html
+   open markdown-viewer/index.html
    
    # Option 2: Use a local server (recommended)
+   cd markdown-viewer
    python3 -m http.server 8000
    # Then navigate to http://localhost:8000
    ```
@@ -78,11 +79,12 @@ All modern browsers with ES6+ support and FileReader API.
 ### File Structure
 
 ```
-markdown-viewer/
-├── index.html          # Main application page
-├── styles.css          # Application styles and theming
-├── app.js             # Core application logic
-└── README.md          # This file
+markdown_viewer/
+├── README.md                    # This file
+└── markdown-viewer/            # Application directory
+    ├── index.html              # Main application page
+    ├── styles.css              # Application styles and theming
+    └── app.js                  # Core application logic
 ```
 
 ### Technology Stack
