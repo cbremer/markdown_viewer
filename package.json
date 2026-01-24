@@ -1,0 +1,54 @@
+{
+  "name": "markdown-diagram-viewer",
+  "version": "1.0.0",
+  "description": "A lightweight, browser-based markdown viewer with enhanced diagram navigation capabilities",
+  "main": "markdown-viewer/app.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:unit": "jest tests/unit",
+    "test:integration": "jest tests/integration",
+    "test:verbose": "jest --verbose",
+    "test:ci": "jest --ci --coverage --maxWorkers=2"
+  },
+  "keywords": [
+    "markdown",
+    "viewer",
+    "mermaid",
+    "diagrams",
+    "documentation"
+  ],
+  "author": "Chris Bremer",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/dom": "^9.3.4",
+    "@testing-library/jest-dom": "^6.1.5",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "markdown-viewer/**/*.js",
+      "!markdown-viewer/**/*.test.js",
+      "!markdown-viewer/**/*.spec.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 50,
+        "branches": 45,
+        "functions": 50,
+        "lines": 50
+      }
+    },
+    "testMatch": [
+      "**/tests/**/*.test.js",
+      "**/tests/**/*.spec.js"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/tests/setup.js"
+    ]
+  }
+}

@@ -240,16 +240,22 @@ async function processMermaidDiagrams() {
         try {
             // Generate unique ID
             const diagramId = `mermaid-diagram-${i}-${Date.now()}`;
-            
+
             // Render mermaid diagram
             const { svg } = await mermaid.render(diagramId, mermaidCode);
-            
+
             // Create diagram container
             const container = createDiagramContainer(svg, diagramId);
-            
+
             // Replace pre/code block with diagram container
             preElement.replaceWith(container);
-            
+
+            // Store mermaid source on SVG element for re-rendering
+            const svgElement = container.querySelector('svg');
+            if (svgElement) {
+                svgElement.setAttribute('data-mermaid-source', mermaidCode);
+            }
+
             // Initialize panzoom for this diagram
             initializePanzoom(diagramId);
             
@@ -557,17 +563,23 @@ async function reRenderMermaidDiagrams() {
         try {
             // Re-render with new theme
             const { svg } = await mermaid.render(`${diagramId}-rerender`, mermaidCode);
-            
+
             // Clean up old panzoom
             const oldInstance = currentPanzoomInstances.find(p => p.id === diagramId);
             if (oldInstance) {
                 oldInstance.instance.destroy();
                 currentPanzoomInstances = currentPanzoomInstances.filter(p => p.id !== diagramId);
             }
-            
+
             // Update wrapper content
             wrapper.innerHTML = svg;
-            
+
+            // Store mermaid source on new SVG element
+            const newSvgElement = wrapper.querySelector('svg');
+            if (newSvgElement) {
+                newSvgElement.setAttribute('data-mermaid-source', mermaidCode);
+            }
+
             // Re-initialize panzoom
             initializePanzoom(diagramId);
             
