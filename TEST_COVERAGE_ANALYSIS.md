@@ -2,18 +2,18 @@
 
 **Date**: 2026-01-24
 **Branch**: claude/analyze-test-coverage-WOZaG
-**Current Test Coverage**: 0% (No tests exist)
+**Current Test Coverage**: Baseline coverage established via Jest tests (overall coverage still limited and requires expansion)
 
 ## Executive Summary
 
-The Markdown Diagram Viewer currently has **no automated tests**. This analysis identifies critical areas requiring test coverage and proposes a phased testing strategy.
+The Markdown Diagram Viewer currently has **limited automated test coverage**. This analysis identifies critical areas requiring additional test coverage and proposes a phased testing strategy.
 
 ### Current State
 - **Total Source Files**: 3 (index.html, app.js, styles.css)
 - **Lines of JavaScript**: ~584 lines in app.js
-- **Testing Framework**: None configured
-- **Test Files**: 0
-- **Coverage Tooling**: None
+- **Testing Framework**: Jest configured (unit and integration tests present)
+- **Test Files**: Multiple Jest test files providing baseline coverage
+- **Coverage Tooling**: Jest coverage reporting (Istanbul) available
 
 ---
 
@@ -436,7 +436,7 @@ describe('Diagram Re-rendering', () => {
 })
 ```
 
-**Note**: Current implementation has a limitation - mermaid source is not stored in `data-mermaid-source` attribute (app.js:554), so re-rendering may not work. This is a **bug that should be fixed**.
+**Note**: Earlier versions had a limitation where mermaid source was not stored in the `data-mermaid-source` attribute, so re-rendering could fail. In this branch, `app.js` has been updated to store the mermaid source on the SVG during initial rendering and again after re-rendering, so this bug is considered fixed. Tests should verify this behavior and guard against regressions.
 
 ---
 
@@ -645,18 +645,19 @@ markdown_viewer/
 
 ## Code Quality Issues Discovered
 
-### Bug #1: Mermaid Re-rendering Not Working
-**Location**: app.js:554
+### Bug #1: Mermaid Re-rendering Not Working (FIXED)
+**Location**: app.js:256, app.js:580
 
-**Issue**: The `reRenderMermaidDiagrams()` function expects SVG elements to have a `data-mermaid-source` attribute, but this is never set during initial rendering.
+**Issue**: Earlier versions did not store the mermaid source in the `data-mermaid-source` attribute during initial rendering, preventing re-rendering on theme changes.
 
-**Impact**: Theme changes don't update existing diagrams.
+**Status**: **FIXED** - The implementation now correctly stores the mermaid source on SVG elements during both initial rendering (app.js:256) and re-rendering (app.js:580).
 
-**Fix Required**:
+**Implementation**:
 ```javascript
 // In processMermaidDiagrams(), after rendering:
-const svgElement = container.querySelector('svg');
 svgElement.setAttribute('data-mermaid-source', mermaidCode);
+// In reRenderMermaidDiagrams(), after re-rendering:
+newSvgElement.setAttribute('data-mermaid-source', mermaidCode);
 ```
 
 ### Bug #2: No Input Sanitization

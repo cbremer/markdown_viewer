@@ -35,6 +35,10 @@ const hljs = {
 
   listLanguages: jest.fn(() => ['javascript', 'python', 'java', 'bash', 'json', 'yaml']),
 
+  // Mock getLanguage to always report that the language exists by default.
+  // Tests can override this with hljs.getLanguage.mockImplementation(...)
+  getLanguage: jest.fn((language) => ({ name: language })),
+
   // Simulate error scenario
   __setHighlightError: function(shouldError) {
     if (shouldError) {
