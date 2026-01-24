@@ -37,7 +37,7 @@ const hljs = {
 
   // Mock getLanguage to always report that the language exists by default.
   // Tests can override this with hljs.getLanguage.mockImplementation(...)
-  getLanguage: jest.fn((language) => true),
+  getLanguage: jest.fn((language) => ({ name: language })),
 
   // Simulate error scenario
   __setHighlightError: function(shouldError) {
