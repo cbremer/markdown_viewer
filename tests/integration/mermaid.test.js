@@ -328,17 +328,17 @@ describe('Mermaid Diagram Processing', () => {
       `;
       await processMermaidDiagrams();
 
-      // Get the panzoom instance
-      const instances = global.currentPanzoomInstances || [];
-      const firstInstance = instances[0];
+      // Get the panzoom instance that was created
+      const panzoomCalls = Panzoom.mock.results;
+      expect(panzoomCalls.length).toBeGreaterThan(0);
+      
+      const firstInstance = panzoomCalls[0].value;
+      const destroySpy = jest.spyOn(firstInstance, 'destroy');
 
-      if (firstInstance) {
-        const destroySpy = jest.spyOn(firstInstance.instance, 'destroy');
+      await reRenderMermaidDiagrams();
 
-        await reRenderMermaidDiagrams();
-
-        expect(destroySpy).toHaveBeenCalled();
-      }
+      // Verify that the old panzoom instance was destroyed
+      expect(destroySpy).toHaveBeenCalled();
     });
   });
 });

@@ -136,7 +136,7 @@ describe('Markdown Rendering', () => {
       const config = marked.setOptions.mock.calls[0][0];
       const highlightFunction = config.highlight;
 
-      const result = highlightFunction('console.log("test")', 'javascript');
+      highlightFunction('console.log("test")', 'javascript');
 
       expect(hljs.highlight).toHaveBeenCalledWith('console.log("test")', {
         language: 'javascript'
