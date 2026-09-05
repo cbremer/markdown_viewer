@@ -78,6 +78,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Verify packaged macOS icon and Markdown associations
+        run: |
+          python3 scripts/test-macos-icon.py
+          python3 scripts/macos-icon.py verify "dist/mac-universal/Specdown Desktop.app"
+
       # Upload the installer (dmg), the auto-update artifact (zip), their
       # blockmaps, and the latest-mac.yml update feed so electron-updater can
       # discover and download new versions.
