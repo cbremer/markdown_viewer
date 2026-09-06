@@ -5,6 +5,12 @@
      Use Conventional-Commit subjects (feat:, fix:, docs: …) to get grouped
      sections; otherwise commits are listed as a flat bullet list. -->
 
+## v0.0.187 — 2026-09-06
+
+### Bug Fixes
+
+- Fix small macOS icons with verified prebuilt ICNS
+
 ## v0.0.186 — 2026-09-01
 
 ### Features
