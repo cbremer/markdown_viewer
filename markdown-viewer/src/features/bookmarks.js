@@ -104,7 +104,12 @@ export function bookmarkCurrentFile() {
       );
       return;
     }
-    const id = crypto.randomUUID();
+    const id =
+      typeof crypto.randomUUID === 'function'
+        ? crypto.randomUUID()
+        : Array.from(crypto.getRandomValues(new Uint8Array(16)), (byte) =>
+            byte.toString(16).padStart(2, '0')
+          ).join('');
     bookmarkPersist([
       ...entries,
       {
@@ -206,15 +211,21 @@ export async function recallBookmark(id, status) {
       content = file.content;
       filename = file.filename;
     } else if (entry.type === 'url') {
-      const response = await fetch(normalizeMarkdownUrl(entry.ref), {
-        credentials: 'omit',
-        signal: AbortSignal.timeout(15000),
-      });
-      if (!response.ok)
-        throw new Error(
-          'URL unavailable. Check your connection or edit the address.'
-        );
-      content = await response.text();
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
+      try {
+        const response = await fetch(normalizeMarkdownUrl(entry.ref), {
+          credentials: 'omit',
+          signal: controller.signal,
+        });
+        if (!response.ok)
+          throw new Error(
+            'URL unavailable. Check your connection or edit the address.'
+          );
+        content = await response.text();
+      } finally {
+        clearTimeout(timeout);
+      }
     }
     // The user may have closed the dialog or changed a bookmark while loading.
     if (

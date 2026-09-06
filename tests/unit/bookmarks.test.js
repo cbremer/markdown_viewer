@@ -32,6 +32,37 @@ describe('Bookmarks', () => {
     return tab;
   }
 
+  it('saves when randomUUID is unavailable', () => {
+    const original = crypto.randomUUID;
+    crypto.randomUUID = undefined;
+    try {
+      doc();
+      bookmarkCurrentFile();
+      expect(getBookmarks()[0].id).toMatch(/^[a-f0-9]{32}$/);
+    } finally {
+      crypto.randomUUID = original;
+    }
+  });
+
+  it('recalls URLs when AbortSignal.timeout is unavailable', async () => {
+    const original = AbortSignal.timeout;
+    AbortSignal.timeout = undefined;
+    try {
+      doc('Remote.md', '# Old', null, { url: 'https://example.com/doc.md' });
+      bookmarkCurrentFile();
+      const id = getBookmarks()[0].id;
+      state.tabs = [];
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        text: async () => '# New',
+      });
+      await recallBookmark(id);
+      expect(state.tabs[0].rawMarkdown).toBe('# New');
+    } finally {
+      AbortSignal.timeout = original;
+    }
+  });
+
   it('persists favorites independently of recents and never merges same-named paths', () => {
     doc('README.md', '# One', '/a/README.md');
     bookmarkCurrentFile();
@@ -86,13 +117,11 @@ describe('Bookmarks', () => {
     state.tabs = [];
     state.activeTabId = null;
     window.specdown = {
-      readBookmarkedFile: jest
-        .fn()
-        .mockResolvedValue({
-          filename: 'notes.md',
-          filePath: entry.ref,
-          content: '# Latest',
-        }),
+      readBookmarkedFile: jest.fn().mockResolvedValue({
+        filename: 'notes.md',
+        filePath: entry.ref,
+        content: '# Latest',
+      }),
     };
     await recallBookmark(entry.id);
     expect(window.specdown.readBookmarkedFile).toHaveBeenCalledWith(
