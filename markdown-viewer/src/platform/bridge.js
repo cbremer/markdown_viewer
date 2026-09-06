@@ -188,3 +188,8 @@ export function bridgeOnUpdateDownloaded(cb) {
 export function bridgeRestartToUpdate() {
   nativeBridge()?.restartToUpdate?.();
 }
+
+/** @param {string} filePath Read a bookmark without opening a duplicate tab. */
+export async function bridgeReadBookmarkedFile(filePath) {
+  return await nativeBridge()?.readBookmarkedFile?.(filePath) ?? null;
+}

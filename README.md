@@ -36,6 +36,7 @@ a **desktop app** (macOS / Windows / Linux), and as an **iOS / iPadOS** app.
 ### Getting documents in
 - **Drag & drop** or **browse** for `.md` / `.markdown` files
 - **Open from URL**, including **GitHub repo browsing** (paste a repo URL and pick a file)
+- **Bookmarks** — save frequently used files with **Bookmark** (`Cmd/Ctrl + D`), then recall them from the header’s **Bookmarks** list. Search, rename, remove, or **Locate file** when a desktop file moves. Desktop files and URLs reopen their current source; browser/iOS files without a reusable path retain a clearly labeled **saved copy**, with **Replace copy** to update it. Bookmarks stay separate from recents and are stored on this device (clearing app/browser data removes them).
 - **Recent files** list for one-click re-open; **session restore** reopens your last doc on the web
 - **Workspace (folder) mode** — open a folder (desktop picker, or drag a folder
   onto the web app in Chromium), browse its markdown in a sidebar, and follow
@@ -95,6 +96,7 @@ does not produce a distributable build.)
 
 | Shortcut | Action |
 |---|---|
+| `Cmd/Ctrl + D` | Bookmark the current file |
 | `Cmd/Ctrl + K` | Command palette |
 | `Cmd/Ctrl + F` | Find in document (`Enter` / `Shift+Enter` next / previous match) |
 | `Cmd/Ctrl + P` | Print / Save as PDF |

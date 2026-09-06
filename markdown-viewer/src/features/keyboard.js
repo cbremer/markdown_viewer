@@ -19,6 +19,7 @@ import { isPresentationOpen, exitPresentation } from './presentation.js';
 import { closeOverflowMenu, isOverflowMenuOpen } from './toolbar-overflow.js';
 import { closeFullscreen, updateZoomUI, resetToFit } from './diagrams.js';
 import { openSearch, closeSearch } from './search.js';
+import { bookmarkCurrentFile, isBookmarksOpen } from './bookmarks.js';
 import { performPrint } from '../platform/ios-chrome.js';
 
 // True when the event target is a text-entry element, so global single-key
@@ -44,6 +45,13 @@ export function setupGlobalKeyboardShortcuts() {
     );
 
   document.addEventListener('keydown', (e) => {
+    if (isBookmarksOpen()) return;
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'd' && !e.shiftKey && !e.altKey) {
+      if (document.querySelector('[role="dialog"]')) return;
+      e.preventDefault();
+      bookmarkCurrentFile();
+      return;
+    }
     // Cmd/Ctrl+K — toggle the command palette (works anywhere)
     if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
       e.preventDefault();

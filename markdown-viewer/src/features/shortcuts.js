@@ -13,6 +13,7 @@ const MOD = /Mac|iPhone|iPad/.test(
 /** @type {Array<{ keys: string, label: string }>} */
 const SHORTCUTS = [
   { keys: `${MOD} K`, label: 'Open command palette' },
+  { keys: `${MOD} D`, label: 'Bookmark this file' },
   { keys: `${MOD} F`, label: 'Find in document' },
   { keys: 'Enter / Shift Enter', label: 'Next / previous search match' },
   { keys: `${MOD} P`, label: 'Print / save as PDF' },

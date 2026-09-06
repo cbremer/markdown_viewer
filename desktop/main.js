@@ -934,8 +934,22 @@ ipcMain.on('unwatch-file', (_event, filePath) => {
   unwatchFile(filePath);
 });
 
-// File info sheet: return on-disk metadata for a path (request/response, so
-// this uses handle/invoke rather than the one-way send channels above).
+// Request/response lets bookmarks recover from moved or inaccessible files.
+ipcMain.handle('read-bookmarked-file', async (event, filePath) => {
+  if (event.senderFrame !== event.sender.mainFrame ||
+      typeof filePath !== 'string' || !path.isAbsolute(filePath) ||
+      !isValidMarkdownFile(filePath)) return null;
+  try {
+    const stats = await fs.promises.stat(filePath);
+    if (!stats.isFile() || stats.size > 8 * 1024 * 1024) return null;
+    const content = await fs.promises.readFile(filePath, 'utf8');
+    return { filename: path.basename(filePath), filePath, content };
+  } catch {
+    return null;
+  }
+});
+
+// File info sheet: return on-disk metadata using request/response IPC.
 ipcMain.handle('get-file-metadata', (_event, filePath) => {
   return buildFileMetadata(filePath);
 });

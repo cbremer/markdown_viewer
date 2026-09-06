@@ -4,6 +4,7 @@
 // the Wave C decomposition — this module owns WHAT the commands are; the
 // palette owns how they're presented.
 
+import { bookmarkCurrentFile, openBookmarks } from './bookmarks.js';
 import { isDesktop } from '../core/platform.js';
 import { registerCommands } from './command-palette.js';
 import {
@@ -55,6 +56,8 @@ const isDesktopFileTabActive = () => {
 
 export function registerAppCommands() {
   registerCommands([
+    { id: 'bookmarks', title: 'Show bookmarks', keywords: ['favorites', 'saved', 'files'], run: openBookmarks },
+    { id: 'bookmark-file', title: 'Bookmark this file', hint: CMD_MOD + ' D', keywords: ['favorite', 'save'], run: bookmarkCurrentFile, isAvailable: isDocumentOpen },
     {
       id: 'open-file',
       title: 'Open file…',

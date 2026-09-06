@@ -12,6 +12,7 @@
  * fetch), surfaced by the File info sheet. Desktop file tabs read their metadata
  * live from disk instead, so they don't populate this.
  * @typedef {object} TabSourceMeta
+ * @property {string} [bookmarkId] Identity of a recalled saved copy.
  * @property {string} [url] Source URL when the document was fetched from one.
  * @property {number} [size] Byte size (from a browser File).
  * @property {number} [lastModified] Last-modified epoch ms (from a browser File).
