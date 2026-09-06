@@ -12,6 +12,8 @@ contextBridge.exposeInMainWorld('specdown', {
   // skipping its GitHub-API version poll where electron-updater owns updates.
   platform: process.platform,
 
+  readBookmarkedFile: (filePath) => ipcRenderer.invoke('read-bookmarked-file', filePath),
+
   // Called by the renderer to open the native file dialog
   requestFileOpen: () => {
     ipcRenderer.send('request-file-open');

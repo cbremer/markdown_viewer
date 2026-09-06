@@ -49,6 +49,7 @@ const OVERFLOW_ACTIONS = [
     run: () => refreshActiveFileFromDisk(),
     isAvailable: overflowHasDesktopFileTab,
   },
+  { targetId: 'bookmark-button', label: 'Bookmark this file' },
   { targetId: 'workspace-toggle', label: 'Workspace files' },
   { targetId: 'toc-toggle', label: 'Table of contents' },
   { targetId: 'split-toggle', label: 'Split view' },

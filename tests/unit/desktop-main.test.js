@@ -920,3 +920,44 @@ describe('desktop/main.js', () => {
     });
   });
 });
+
+describe('Bookmark file reads', () => {
+  const { ipcMain } = require('electron');
+  const readBookmark = ipcMain.handle.mock.calls.find(([channel]) => channel === 'read-bookmarked-file')[1];
+  const frame = {};
+  const event = { senderFrame: frame, sender: { mainFrame: frame } };
+
+  afterEach(() => {
+    fs.promises.stat.mockRestore?.();
+    fs.promises.readFile.mockRestore?.();
+  });
+
+  it('returns the current file content with a real path', async () => {
+    jest.spyOn(fs.promises, 'stat').mockResolvedValue({ isFile: () => true, size: 10 });
+    jest.spyOn(fs.promises, 'readFile').mockResolvedValue('# Updated');
+    await expect(readBookmark(event, '/tmp/bookmark.md')).resolves.toEqual({
+      filePath: '/tmp/bookmark.md', filename: 'bookmark.md', content: '# Updated',
+    });
+  });
+
+  it('returns null when a bookmarked file has moved or is inaccessible', async () => {
+    jest.spyOn(fs.promises, 'stat').mockRejectedValue(new Error('ENOENT'));
+    await expect(readBookmark(event, '/tmp/missing.md')).resolves.toBeNull();
+  });
+
+  it('rejects subframe requests and invalid file types before reading', async () => {
+    const read = jest.spyOn(fs.promises, 'stat');
+    await expect(readBookmark({ ...event, senderFrame: {} }, '/tmp/a.md')).resolves.toBeNull();
+    await expect(readBookmark(event, '/tmp/a.html')).resolves.toBeNull();
+    await expect(readBookmark(event, 'relative.md')).resolves.toBeNull();
+    await expect(readBookmark(event, null)).resolves.toBeNull();
+    expect(read).not.toHaveBeenCalled();
+  });
+
+  it('rejects directories and oversized files', async () => {
+    jest.spyOn(fs.promises, 'stat').mockResolvedValueOnce({ isFile: () => false, size: 0 })
+      .mockResolvedValueOnce({ isFile: () => true, size: 9 * 1024 * 1024 });
+    await expect(readBookmark(event, '/tmp/folder.md')).resolves.toBeNull();
+    await expect(readBookmark(event, '/tmp/large.md')).resolves.toBeNull();
+  });
+});

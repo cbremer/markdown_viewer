@@ -14,6 +14,7 @@ Each project gets its own subdirectory:
 | [project-sharing/](project-sharing/) | Product sharing kit — LinkedIn copy, article outlines, web showcase homepage; names/press for the HTML era live in [project-html](project-html/2026-08-23-brainstorm-names-and-press.md) |
 | [project-html/](project-html/) | HTML documents — forked viewing runtime; staging rail before any merge to `main` |
 | [project-editorial-diagrams/](project-editorial-diagrams/) | Viewer integration for diagram-design HTML/SVG (brainstorm; not built) |
+| [project-bookmarks/](project-bookmarks/) | Persistent document bookmarks, saved copies, and moved-file recovery |
 
 ## Naming Conventions
 

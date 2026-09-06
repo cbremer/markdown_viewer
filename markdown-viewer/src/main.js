@@ -75,7 +75,8 @@ import {
   checkForDiagramLink,
   configureShareLinks,
 } from './features/share-links.js';
-import { createTab, configureTabs } from './features/tabs.js';
+import { configureBookmarks, setupBookmarks } from './features/bookmarks.js';
+import { createTab, switchTab, configureTabs } from './features/tabs.js';
 import { showToast } from './features/toast.js';
 import {
   setupToolbarOverflow,
@@ -211,6 +212,8 @@ function init() {
     configureWorkspace({
         openFile: (/** @type {string} */ name, /** @type {string} */ content) => createTab(name, content, null),
     });
+    configureBookmarks({ createTab, switchTab });
+    setupBookmarks();
     registerAppCommands();
     setupVersionInfo(APP_VERSION, APP_VERSION_LABEL);
     setupTheme();

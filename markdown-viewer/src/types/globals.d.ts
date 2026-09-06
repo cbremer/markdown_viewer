@@ -50,6 +50,7 @@ interface SpecdownDesktopBridge {
   isDesktop?: boolean;
   /** Shell OS (Node `process.platform`): 'darwin' | 'win32' | 'linux'. */
   platform?: string;
+  readBookmarkedFile?: (filePath: string) => Promise<SpecdownFileData | null>;
   requestFileOpen?: () => void;
   requestOpenPath?: (filePath: string) => void;
   requestOpenFolder?: () => void;

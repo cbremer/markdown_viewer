@@ -10,6 +10,7 @@ import {
   closeIOSTocSheet,
   setIOSSheetVisibility,
 } from './ios-chrome.js';
+import { bookmarkCurrentFile, openBookmarks } from '../features/bookmarks.js';
 import { toggleToc } from '../features/toc.js';
 import { toggleViewMode } from '../features/view-mode.js';
 import { toggleSplitView } from '../features/split-view.js';
@@ -25,6 +26,8 @@ const iosWiringEl = (/** @type {string} */ id) => document.getElementById(id);
 /** Bind every iOS chrome button. Safe to call on every surface (no-ops when
  * the elements are hidden; they exist in the shared index.html). */
 export function setupIOSEventListeners() {
+  iosWiringEl('ios-bookmark-button')?.addEventListener('click', () => { closeIOSActionSheet(); bookmarkCurrentFile(); });
+  iosWiringEl('ios-bookmarks-button')?.addEventListener('click', () => { closeIOSActionSheet(); openBookmarks(); });
   const iosOpenButton = iosWiringEl('ios-open-button');
   const iosContentsButton = /** @type {HTMLButtonElement | null} */ (
     iosWiringEl('ios-contents-button')
