@@ -5,6 +5,16 @@
      Use Conventional-Commit subjects (feat:, fix:, docs: …) to get grouped
      sections; otherwise commits are listed as a flat bullet list. -->
 
+## v0.0.188 — 2026-09-06
+
+### Features
+
+- add persistent document bookmarks with moved-file recovery
+
+### Bug Fixes
+
+- support bookmark recall in older browser runtimes
+
 ## v0.0.187 — 2026-09-06
 
 ### Bug Fixes
