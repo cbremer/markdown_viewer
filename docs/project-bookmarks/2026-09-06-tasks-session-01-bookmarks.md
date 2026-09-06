@@ -32,7 +32,7 @@ No dependency changes or release-pipeline changes. Existing roadmap and architec
 
 ## Validation
 
-- `npm test -- --runInBand --silent`: 650 passing tests in 39 suites (21 new tests).
+- `npm test -- --runInBand --silent`: 652 passing tests in 39 suites (23 new tests).
 - `npm run lint`: passed.
 - `npm run typecheck`: passed.
 - `npm run build`: passed, with existing Vite config-loader and large-chunk warnings.
@@ -44,3 +44,7 @@ No dependency changes or release-pipeline changes. Existing roadmap and architec
 ## Regression cases
 
 Distinct same-named files; duplicate saves; restart persistence; current desktop reads; missing paths; reconnect/cancel; saved-copy replacement; tab reuse; canceled async recall; URL updates; search and safe filenames; confirmed removal; full/corrupt storage; iPhone actions; native IPC validation and bounded reads.
+
+## PR review follow-up
+
+Guarded UUID generation for runtimes without `crypto.randomUUID` and replaced `AbortSignal.timeout` with an AbortController timer, cleared after response-body completion or failure. Added regression tests with both newer APIs unavailable. All tests, lint, typecheck, and build pass.
