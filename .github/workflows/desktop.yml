@@ -93,7 +93,7 @@ jobs:
       # discover and download new versions.
       - name: Upload macOS artifacts to GitHub Release
         if: ${{ !inputs.validate-only }}
-        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3
         with:
           tag_name: ${{ steps.get_tag.outputs.tag }}
           files: |
@@ -192,7 +192,7 @@ jobs:
       # Upload the NSIS installer, its blockmap, and the latest.yml update feed
       # for electron-updater on Windows.
       - name: Upload Windows artifacts to GitHub Release
-        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3
         with:
           tag_name: ${{ steps.get_tag.outputs.tag }}
           files: |
@@ -245,7 +245,7 @@ jobs:
       # Upload the AppImage and the latest-linux.yml update feed for
       # electron-updater on Linux.
       - name: Upload Linux artifacts to GitHub Release
-        uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3
+        uses: softprops/action-gh-release@efb35369e0ad2afab669f228072c1b0d510eae64 # v3
         with:
           tag_name: ${{ steps.get_tag.outputs.tag }}
           files: |
