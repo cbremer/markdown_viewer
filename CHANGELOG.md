@@ -5,6 +5,12 @@
      Use Conventional-Commit subjects (feat:, fix:, docs: …) to get grouped
      sections; otherwise commits are listed as a flat bullet list. -->
 
+## v0.0.189 — 2026-09-07
+
+### Bug Fixes
+
+- Fix macOS signing keychain password handling
+
 ## v0.0.188 — 2026-09-06
 
 ### Features
