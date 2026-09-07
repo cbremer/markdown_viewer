@@ -26,7 +26,8 @@
     "build:html": "vite build --mode html && node scripts/copy-static.js",
     "preview": "vite preview",
     "preview:html": "npm run build:html && vite preview --mode html",
-    "version": "node scripts/sync-version.js && git add markdown-viewer/src/main.js"
+    "version": "node scripts/sync-version.js && git add markdown-viewer/src/main.js",
+    "postinstall": "node scripts/patch-macos-keychain.js"
   },
   "keywords": [
     "markdown",
