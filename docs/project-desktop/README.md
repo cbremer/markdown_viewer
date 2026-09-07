@@ -43,6 +43,7 @@ Three frameworks were evaluated (Tauri, Electron, Swift + WKWebView). Electron w
 | Mar 03, 2026 | Tasks | [2026-03-03-tasks-session-05-verification-checklist.md](2026-03-03-tasks-session-05-verification-checklist.md) | Session 5 verification checklist — what shipped in last 48 hours, what remains, and QA sign-off list |
 | Jun 21, 2026 | Tasks | [2026-06-21-tasks-session-06-auto-update.md](2026-06-21-tasks-session-06-auto-update.md) | Session 6 — Desktop auto-update via electron-updater (GitHub Releases feed, mac zip target, background download + install on quit) |
 | Sep 05, 2026 | Tasks | [2026-09-05-tasks-session-08-finder-icons.md](2026-09-05-tasks-session-08-finder-icons.md) | Session 8 — Compatible small macOS icons and packaged-icon release verification |
+| Sep 07, 2026 | Tasks | [2026-09-07-tasks-session-09-signing-keychain.md](2026-09-07-tasks-session-09-signing-keychain.md) | Session 9 — Backport temporary signing keychain password correction |
 
 ---
 

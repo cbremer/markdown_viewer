@@ -9,6 +9,11 @@ on:
       - 'v*'
   # Triggered explicitly by the version-bump "tag" job, or manually.
   workflow_dispatch:
+    inputs:
+      validate-only:
+        description: Build and notarize macOS without publishing a release
+        type: boolean
+        default: false
 
 jobs:
   # -------------------------------------------------------
@@ -87,6 +92,7 @@ jobs:
       # blockmaps, and the latest-mac.yml update feed so electron-updater can
       # discover and download new versions.
       - name: Upload macOS artifacts to GitHub Release
+        if: ${{ !inputs.validate-only }}
         uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3
         with:
           tag_name: ${{ steps.get_tag.outputs.tag }}
@@ -102,7 +108,7 @@ jobs:
       # unnoticed for three releases). File/refresh a labeled issue so the
       # outage is visible without anyone reading Actions logs.
       - name: Open an issue if the macOS release build failed
-        if: failure()
+        if: ${{ failure() && !inputs.validate-only }}
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
@@ -147,6 +153,7 @@ jobs:
   # Windows: NSIS installer (.exe)
   # -------------------------------------------------------
   build-windows:
+    if: ${{ !inputs.validate-only }}
     name: Build Windows Installer
     runs-on: windows-latest
     permissions:
@@ -197,6 +204,7 @@ jobs:
   # Linux: AppImage
   # -------------------------------------------------------
   build-linux:
+    if: ${{ !inputs.validate-only }}
     name: Build Linux AppImage
     runs-on: ubuntu-latest
     permissions:
