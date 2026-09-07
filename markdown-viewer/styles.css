@@ -1343,6 +1343,7 @@ body {
    treatment. Per-button rules elsewhere carry only the real deviations:
    annotate-active orange, the count badges, and the view-toggle icon
    typography. (Live-reload state lives on the .watch-chip by the filename.) */
+.bookmark-save-button,
 .workspace-toggle-button,
 .toc-toggle-button,
 .split-toggle-button,
@@ -1371,6 +1372,7 @@ body {
     padding: 0.5rem 0.9rem;
 }
 
+.bookmark-save-button:hover,
 .workspace-toggle-button:hover,
 .workspace-toggle-button.active,
 .toc-toggle-button:hover,
