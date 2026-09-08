@@ -5,6 +5,12 @@
      Use Conventional-Commit subjects (feat:, fix:, docs: …) to get grouped
      sections; otherwise commits are listed as a flat bullet list. -->
 
+## v0.0.190 — 2026-09-08
+
+### Bug Fixes
+
+- match bookmark button to shared toolbar styling
+
 ## v0.0.189 — 2026-09-07
 
 ### Bug Fixes
