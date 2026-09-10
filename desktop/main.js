@@ -1,8 +1,9 @@
-const { app, BrowserWindow, Menu, dialog, ipcMain, globalShortcut, shell } = require('electron');
+const { app, BrowserWindow, Menu, dialog, ipcMain, globalShortcut, shell, nativeImage } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
 const chokidar = require('chokidar');
+const { createAppIconController } = require('./app-icons');
 
 const VALID_EXTENSIONS = ['.md', '.markdown'];
 const MAX_RECENT_FILES = 15;
@@ -32,6 +33,15 @@ function isSignedUpdatePlatform(platform) {
 let mainWindow = null;
 let store = null;
 let logFilePath = null;
+const appIconController = createAppIconController({
+  app, nativeImage, platform: process.platform,
+  getStore: () => store, getWindow: () => mainWindow,
+  onChange: () => rebuildMenu(),
+  onError: (error) => {
+    logError('Unable to change app icon', error);
+    dialog.showMessageBox({ type: 'error', message: 'Unable to change app icon', detail: error.message });
+  },
+});
 // electron-updater instance (set in packaged builds only) + a flag marking a
 // user-initiated "Check for Updates…" so its result is surfaced (a silent
 // background check stays silent).
@@ -254,6 +264,7 @@ function initStore() {
     windowBounds: { width: 1200, height: 800 },
     session: { tabs: [] },
     customCssPath: '',
+    appIcon: 'original',
   };
 
   let statePath;
@@ -362,6 +373,8 @@ function createWindow() {
       nodeIntegration: false,
     },
   });
+
+  appIconController.restore();
 
   // Loads the Vite build output. `npm run desktop` / `desktop:build` run the
   // web build first so this file exists.
@@ -1213,6 +1226,7 @@ function buildMenu() {
     {
       label: 'Appearance',
       submenu: [
+        ...appIconController.menu(),
         {
           label: 'Load Custom CSS Theme...',
           click: () => loadCustomCss(),

@@ -34,6 +34,13 @@ export function setupIOSNativeUI() {
   syncIOSChrome();
 }
 
+export function requestAppIconPickerIfAvailable() {
+  const handler = iosHandler();
+  if (!isIOSNative || !handler) return false;
+  handler.postMessage({ action: 'showAppIconPicker' });
+  return true;
+}
+
 export function requestNativeOpenIfAvailable() {
   if (isDesktop && hasDesktopBridge()) {
     bridgeRequestFileOpen();

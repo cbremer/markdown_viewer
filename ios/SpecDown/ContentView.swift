@@ -24,6 +24,7 @@ struct ContentView: View {
                 viewerSurface
             }
         }
+            .sheet(isPresented: $bridge.showsAppIconPicker) { AppIconPicker() }
             .onAppear {
                 bridge.applyTheme(colorScheme)
                 bridge.applyLayoutMode(usesPadShell ? "pad" : "phone")
@@ -59,6 +60,12 @@ struct ContentView: View {
                     bridge.openDocumentPickerFromSidebar()
                 } label: {
                     Label("Open Markdown File", systemImage: "doc.badge.plus")
+                }
+            }
+
+            Section("Appearance") {
+                Button { bridge.showsAppIconPicker = true } label: {
+                    Label("App Icon", systemImage: "app.badge")
                 }
             }
 

@@ -21,6 +21,7 @@ final class WebBridge: NSObject, ObservableObject, WKScriptMessageHandler {
     @Published private(set) var currentDocumentName = "Specdown Document"
     @Published private(set) var recentFiles: [String]
     @Published private(set) var hasLoadedDocument = false
+    @Published var showsAppIconPicker = false
 
     private var pageLoaded = false
     private var pendingTheme: String?
@@ -55,6 +56,12 @@ final class WebBridge: NSObject, ObservableObject, WKScriptMessageHandler {
         let data = body["data"] as? [String: Any]
 
         switch action {
+        case "showAppIconPicker":
+            guard message.frameInfo.isMainFrame,
+                  message.frameInfo.request.url?.scheme == BundleSchemeHandler.scheme,
+                  message.frameInfo.request.url?.host == BundleSchemeHandler.host else { return }
+            showsAppIconPicker = true
+
         case "openFilePicker":
             presentDocumentPicker()
 

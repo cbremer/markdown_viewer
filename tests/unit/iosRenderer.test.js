@@ -42,6 +42,13 @@ describe('iOS renderer integration', () => {
     expect(fileInput.click).not.toHaveBeenCalled();
   });
 
+  it.each(['ios-welcome-app-icon-button', 'ios-app-icon-button'])('opens the native icon picker from %s', (id) => {
+    window.webkit.messageHandlers.specdown.postMessage.mockClear();
+    document.getElementById(id).click();
+    expect(window.webkit.messageHandlers.specdown.postMessage).toHaveBeenCalledTimes(1);
+    expect(window.webkit.messageHandlers.specdown.postMessage).toHaveBeenCalledWith({ action: 'showAppIconPicker' });
+  });
+
   it('shows bundled sample actions on iOS', () => {
     const sampleSection = document.getElementById('ios-sample-section');
     expect(sampleSection.style.display).toBe('');
