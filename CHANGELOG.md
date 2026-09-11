@@ -5,6 +5,12 @@
      Use Conventional-Commit subjects (feat:, fix:, docs: …) to get grouped
      sections; otherwise commits are listed as a flat bullet list. -->
 
+## v0.0.191 — 2026-09-11
+
+### Features
+
+- Add native app icon choices for desktop and iOS (#245)
+
 ## v0.0.190 — 2026-09-08
 
 ### Bug Fixes
