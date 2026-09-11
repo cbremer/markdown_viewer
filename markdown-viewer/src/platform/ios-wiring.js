@@ -5,6 +5,7 @@
 
 import {
   requestNativeOpenIfAvailable,
+  requestAppIconPickerIfAvailable,
   performPrint,
   closeIOSActionSheet,
   closeIOSTocSheet,
@@ -26,6 +27,13 @@ const iosWiringEl = (/** @type {string} */ id) => document.getElementById(id);
 /** Bind every iOS chrome button. Safe to call on every surface (no-ops when
  * the elements are hidden; they exist in the shared index.html). */
 export function setupIOSEventListeners() {
+  for (const id of ['ios-app-icon-button', 'ios-welcome-app-icon-button']) {
+    iosWiringEl(id)?.addEventListener('click', (event) => {
+      event.stopPropagation();
+      closeIOSActionSheet();
+      requestAppIconPickerIfAvailable();
+    });
+  }
   iosWiringEl('ios-bookmark-button')?.addEventListener('click', () => { closeIOSActionSheet(); bookmarkCurrentFile(); });
   iosWiringEl('ios-bookmarks-button')?.addEventListener('click', () => { closeIOSActionSheet(); openBookmarks(); });
   const iosOpenButton = iosWiringEl('ios-open-button');

@@ -15,6 +15,7 @@ Each project gets its own subdirectory:
 | [project-html/](project-html/) | HTML documents — forked viewing runtime; staging rail before any merge to `main` |
 | [project-editorial-diagrams/](project-editorial-diagrams/) | Viewer integration for diagram-design HTML/SVG (brainstorm; not built) |
 | [project-bookmarks/](project-bookmarks/) | Persistent document bookmarks, saved copies, and moved-file recovery |
+| [project-app-icons/](project-app-icons/) | Native desktop and iOS icon switching |
 
 ## Naming Conventions
 
